@@ -89,7 +89,7 @@ class ProductController extends Controller
      */
     public function show(Product $product,$id): ProductResource
     {
-        return new ProductResource($product->find($id));
+        return new ProductResource($product->query()->findOrFail($id));
     }
 
     /**
@@ -113,12 +113,13 @@ class ProductController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Product $product): \Illuminate\Http\JsonResponse
     {
         $product->query()->update($request->all());
         $product->attributes()->update($request->all());
+        return response()->json(['message' => 'Product Updated']);
     }
 
     /**

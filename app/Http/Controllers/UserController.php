@@ -59,11 +59,12 @@ class UserController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        //
+        User::query()->findOrFail($id)->delete();
+        return response()->json(['message' => 'User Deleted!']);
     }
     public function login(Request $request): \Illuminate\Http\JsonResponse
     {
@@ -82,19 +83,25 @@ class UserController extends Controller
     public function register(Request $request): \Illuminate\Http\JsonResponse
     {
         $this->validate($request, [
-            'name' => 'required',
+            'name' => 'required|min:3',
             'email' => 'required|email|unique:users',
-            'password' => 'required',
+            'password' => 'required|min:8',
         ]);
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-        $token = $user->createToken('MyApp')->accessToken;
-        return response()->json(['token' => $token], 200);
+        try{
+            $user = User::query()->create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
+            $token = $user->createToken('MyApp')->accessToken;
+            $message = "ok!";
+        } catch (\Illuminate\Database\QueryException $ex) {
+            $token = null;
+            $message = $ex->getMessage();
+        }
+        return response()->json(['token' => $token, 'message' => $message], 200);
     }
-    public function getUser(Request $request)
+    public function getUser(Request $request): UserResource
     {
         return new UserResource($request->user());
     }
