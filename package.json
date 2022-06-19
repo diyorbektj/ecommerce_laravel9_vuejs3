@@ -1,0 +1,35 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "mix",
+        "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "hot": "mix watch --hot",
+        "prod": "npm run production",
+        "production": "mix --production"
+    },
+    "devDependencies": {
+        "@tailwindcss/forms": "^0.5.0",
+        "@vue/compiler-sfc": "^3.2.33",
+        "autoprefixer": "^10.4.4",
+        "axios": "^0.25",
+        "laravel-mix": "^6.0.6",
+        "lodash": "^4.17.19",
+        "postcss": "^8.4.12",
+        "style-loader": "^3.3.1",
+        "tailwindcss": "^3.0.24",
+        "vue-loader": "^17.0.0"
+    },
+    "dependencies": {
+        "@alfsnd/vue-bootstrap-select": "^0.4.4",
+        "@vueform/multiselect": "^2.3.3",
+        "notiwind": "^1.2.5",
+        "swiper": "^8.1.0",
+        "vue": "^3.2.31",
+        "vue-meta": "^2.4.0",
+        "vue-router": "^4.0.13",
+        "vue-star-rating": "^2.1.0",
+        "vuex": "^4.0.2"
+    }
+}
